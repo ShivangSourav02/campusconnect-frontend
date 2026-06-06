@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import SchoolDashboard from './pages/school/SchoolDashboard';
@@ -12,15 +13,15 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate replace to="/login" />} />
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/school/dashboard" element={<SchoolDashboard />} />
         <Route path="/school/profile" element={<SchoolProfile />} />
         <Route path="/school/rfq/:rfqId/quotations" element={<ViewQuotations />} />
         <Route path="/vendor/dashboard" element={<VendorDashboard />} />
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/vendor/profile" element={<VendorProfile />} />
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
       </Routes>
     </BrowserRouter>
   );
