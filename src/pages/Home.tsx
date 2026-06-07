@@ -5,22 +5,21 @@ export default function Home() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Wire up navigation buttons
-    const wire = (id: string, path: string) => {
-      const el = document.getElementById(id);
-      if (el) el.addEventListener('click', () => navigate(path));
+    const handleClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const btn = target.closest('[id]') as HTMLElement;
+      if (!btn) {
+        if (target.closest('.cc-explore-btn')) navigate('/register');
+        return;
+      }
+      if (btn.id === 'cc-signin-btn') navigate('/login');
+      else if (btn.id === 'cc-getstarted-btn') navigate('/register');
+      else if (btn.id === 'cc-hero-cta') navigate('/register');
+      else if (btn.id === 'cc-cta-register') navigate('/register');
+      else if (btn.id === 'cc-cta-signin') navigate('/login');
     };
 
-    wire('cc-signin-btn', '/login');
-    wire('cc-getstarted-btn', '/register');
-    wire('cc-hero-cta', '/register');
-    wire('cc-cta-register', '/register');
-    wire('cc-cta-signin', '/login');
-
-    // Wire explore buttons
-    document.querySelectorAll('.cc-explore-btn').forEach(btn => {
-      btn.addEventListener('click', () => navigate('/register'));
-    });
+    document.addEventListener('click', handleClick);
 
     // Navbar scroll effect
     const navbar = document.getElementById('navbar');
@@ -58,6 +57,7 @@ export default function Home() {
     document.querySelectorAll('.step-card,.feature-card,.metric-block,.benefit-item').forEach(el => obs.observe(el));
 
     return () => {
+      document.removeEventListener('click', handleClick);
       window.removeEventListener('scroll', onScroll);
       obs.disconnect();
     };
